@@ -113,7 +113,7 @@ function openBrowser(url: string): void {
     const child = spawn(cmd, args, { detached: true, stdio: 'ignore' });
     child.unref();
   } catch {
-    // 忽略错误，打开浏览器失败不影响服务器运行
+    // Ignorar error, la falla al abrir el navegador no afecta la ejecución del servidor
   }
 }
 

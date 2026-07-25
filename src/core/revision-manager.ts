@@ -205,7 +205,7 @@ export class RevisionManager {
 
     // 生成 Revisions 章节
     let revisionsSection = '\n\n---\n\n## Revisions\n\n';
-    revisionsSection += '| 日期 | 类型 | 变更描述 | 原因 | 影响 API |\n';
+    revisionsSection += '| Fecha | Tipo | Descripción | Motivo | API afectada |\n';
     revisionsSection += '|------|------|----------|------|----------|\n';
     
     for (const rev of data.revisions) {

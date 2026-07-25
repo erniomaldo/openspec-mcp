@@ -452,7 +452,7 @@ export class OpenSpecCli {
         requirementsCount,
         updatedAt: stats.mtime.toISOString(),
         content,
-        requirements: [], // TODO: 详细解析需求
+        requirements: [], // TODO: Analizar requisitos en detalle
       };
     } catch {
       return null;
