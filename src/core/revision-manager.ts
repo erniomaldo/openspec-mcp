@@ -6,6 +6,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { randomUUID } from 'crypto';
+import type { ProjectContextRef } from './project-context.js';
 
 /**
  * 变更元数据
@@ -48,17 +49,17 @@ interface RevisionsFile {
 }
 
 export class RevisionManager {
-  private cwd: string;
+  private ref: ProjectContextRef;
 
-  constructor(options: { cwd: string }) {
-    this.cwd = options.cwd;
+  constructor(options: { ref: ProjectContextRef }) {
+    this.ref = options.ref;
   }
 
   /**
    * 获取变更目录
    */
   private getChangeDir(changeId: string): string {
-    return path.join(this.cwd, 'openspec', 'changes', changeId);
+    return path.join(this.ref.current, 'openspec', 'changes', changeId);
   }
 
   /**

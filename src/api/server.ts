@@ -25,6 +25,7 @@ import { registerContextRoutes } from './routes/context.js';
 import { CrossServiceManager } from '../core/cross-service-manager.js';
 import { RevisionManager } from '../core/revision-manager.js';
 import { VERSION } from '../utils/version.js';
+import { createProjectContext } from '../core/project-context.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -148,12 +149,13 @@ export async function startApiServer(options: ApiServerOptions): Promise<Fastify
   }
 
   // 创建核心模块
-  const cli = new OpenSpecCli({ cwd });
-  const approvalManager = new ApprovalManager({ cwd });
-  const reviewManager = new ReviewManager({ cwd });
-  const specParser = new SpecParser({ cwd });
-  const fileWatcher = new FileWatcher({ cwd });
-  const crossServiceManager = new CrossServiceManager({ cwd });
+  const ref = createProjectContext(cwd);
+  const cli = new OpenSpecCli({ ref });
+  const approvalManager = new ApprovalManager({ ref });
+  const reviewManager = new ReviewManager({ ref });
+  const specParser = new SpecParser({ ref });
+  const fileWatcher = new FileWatcher({ ref });
+  const crossServiceManager = new CrossServiceManager({ ref });
 
   // WebSocket 客户端列表
   const wsClients = new Set<any>();
@@ -181,7 +183,7 @@ export async function startApiServer(options: ApiServerOptions): Promise<Fastify
   };
 
   // API 上下文
-  const revisionManager = new RevisionManager({ cwd });
+  const revisionManager = new RevisionManager({ ref });
   const ctx: ApiContext = {
     cli,
     approvalManager,

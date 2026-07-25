@@ -4,6 +4,7 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SpecCritic, CritiqueResult } from './spec-critic.js';
+import { createProjectContext } from './project-context.js';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as os from 'os';
@@ -15,7 +16,7 @@ describe('SpecCritic', () => {
   beforeEach(async () => {
     // 创建临时目录
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'spec-critic-test-'));
-    critic = new SpecCritic({ cwd: tempDir });
+    critic = new SpecCritic({ ref: createProjectContext(tempDir) });
     
     // 创建 openspec 目录结构
     const changeDir = path.join(tempDir, 'openspec', 'changes', 'test-change');

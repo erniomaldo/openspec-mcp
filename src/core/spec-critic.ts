@@ -12,6 +12,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { randomUUID } from 'crypto';
+import type { ProjectContextRef } from './project-context.js';
 
 /**
  * 评审类别
@@ -86,11 +87,11 @@ interface CritiqueMatch {
  * SpecCritic 主类
  */
 export class SpecCritic {
-  private cwd: string;
+  private ref: ProjectContextRef;
   private rules: CritiqueRule[];
 
-  constructor(options?: { cwd?: string }) {
-    this.cwd = options?.cwd || process.cwd();
+  constructor(options: { ref: ProjectContextRef }) {
+    this.ref = options.ref;
     this.rules = this.initializeRules();
   }
 
@@ -98,7 +99,7 @@ export class SpecCritic {
    * 获取评审结果存储目录
    */
   private getCritiquesDir(): string {
-    return path.join(this.cwd, 'openspec', 'critiques');
+    return path.join(this.ref.current, 'openspec', 'critiques');
   }
 
   /**
@@ -106,7 +107,7 @@ export class SpecCritic {
    */
   private getChangeDir(changeName: string): string {
     const safeId = this.ensureSafeId(changeName);
-    return path.join(this.cwd, 'openspec', 'changes', safeId);
+    return path.join(this.ref.current, 'openspec', 'changes', safeId);
   }
 
   /**
